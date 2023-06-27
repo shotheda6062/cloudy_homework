@@ -8,10 +8,12 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Setter
 @Getter
 @Entity
-@Table(name = "TB_ACCOUNT_INFO")
+@Table(name = "TB_ACCOUNT_INFO",schema="HW_SECURITY")
 public class AccountInfoPo {
 
     @Id
@@ -22,8 +24,8 @@ public class AccountInfoPo {
     String userPassword;
 
     @Column(name="create_time")
-    DateTime createTime;
+    Timestamp createTime;
 
     @Column(name="last_login")
-    DateTime lastLogin;
+    Timestamp lastLogin;
 }

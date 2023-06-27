@@ -18,7 +18,7 @@ public class CryptoServiceImpl implements CryptoService {
     String keyId;
 
     @Override
-    public String encrypt(String keyId, String text) {
+    public String encrypt(String text) {
 
         byte[] encryptedBytes = kmsTemplate.
                 encryptText(keyId, text);
