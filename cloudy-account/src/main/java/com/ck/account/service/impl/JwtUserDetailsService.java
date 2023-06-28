@@ -31,6 +31,8 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public AccountInfoPo createAccount(String accountID, String password) {
+        System.out.println("EnCdoe -------------");
+        System.out.println(bcryptEncoder.encode(password));
         AccountInfoPo accountInfoPo = new AccountInfoPo();
         accountInfoPo.setUserAccound(accountID);
         accountInfoPo.setUserPassword(bcryptEncoder.encode(password));
