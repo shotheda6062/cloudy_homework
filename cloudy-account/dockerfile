@@ -1,4 +1,4 @@
 FROM unitfinance/jdk17-sbt-scala:latest
 RUN mkdir /opt/app
-COPY ./target/*.jar /opt/app
-CMD ["java", "-jar", "../../opt/app/cloudy-account-0.0.1-SNAPSHOT.jar"]
+COPY ./target/*.jar /opt/app/account.jar
+ENTRYPOINT ["java","-jar","/opt/app/account.jar"]
