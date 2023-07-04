@@ -16,6 +16,7 @@ public class CloudKMSPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return rawPassword.equals(encodedPassword);
+       String decodePassword = cryptoService.decrypt(encodedPassword);
+       return rawPassword.equals(decodePassword);
     }
 }

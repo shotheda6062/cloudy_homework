@@ -40,6 +40,5 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         return userDataAccess.save(accountInfoPo);
 
-
     }
 }

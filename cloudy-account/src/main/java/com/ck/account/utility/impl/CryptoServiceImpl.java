@@ -24,10 +24,23 @@ public class CryptoServiceImpl implements CryptoService {
         return encodeBase64(encryptedBytes);
     }
 
+    @Override
+    public String decrypt(String text) {
+        byte[] decryptedBytes = decodeBase64(text);
+        String decrypted = kmsTemplate.
+                decryptText(keyId, decryptedBytes);
+
+        return decrypted;
+    }
 
     private String encodeBase64(byte[] bytes) {
         byte[] encoded = Base64.getEncoder().encode(bytes);
         return new String(encoded);
+    }
+
+    private byte[] decodeBase64(String encryptedText) {
+        byte[] bytes = encryptedText.getBytes();
+        return Base64.getDecoder().decode(bytes);
     }
 
 }
