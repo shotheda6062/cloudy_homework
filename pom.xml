@@ -12,6 +12,7 @@
     <modules>
         <module>cloudy-account</module>
         <module>cloudy-files</module>
+        <module>cloudy-event</module>
     </modules>
 
 </project>
