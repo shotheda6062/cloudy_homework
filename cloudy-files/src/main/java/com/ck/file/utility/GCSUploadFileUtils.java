@@ -27,7 +27,7 @@ public class GCSUploadFileUtils {
 
     public byte[] getFile(String userAccount,String fileName){
         BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName));
-        return storage.readAllBytes(userAccount,fileName);
+        return storage.readAllBytes(id);
     }
 
     private String genGCSFilePath(String accountID,String fileName) {
