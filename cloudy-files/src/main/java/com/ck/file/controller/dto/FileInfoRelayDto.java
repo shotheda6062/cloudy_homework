@@ -2,10 +2,11 @@ package com.ck.file.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.io.ByteArrayResource;
 
 @Getter
 @Setter
-public class FileInfoDto {
+public class FileInfoRelayDto {
 
     String fileName;
 
@@ -13,5 +14,4 @@ public class FileInfoDto {
 
     String originFileName;
 
-    Boolean isCompress;
 }

@@ -18,18 +18,14 @@ public class GCSUploadFileUtils {
     private Storage storage;
 
 
-    @Value("${spring.cloud.gcp.storage.buket}")
-    private String cloudBuket;
-
-
-    public void upload(byte[] filebytes,String userAccount,String fileName,String fileType) {
-        BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName));
+    public void upload(byte[] filebytes,String userAccount,String fileName,String fileType,String buket) {
+        BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName,buket));
         BlobInfo info = BlobInfo.newBuilder(id).setContentType(fileType).build();
         storage.create(info, filebytes);
     }
 
-    public byte[] getFile(String userAccount,String fileName){
-        BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName));
+    public byte[] getFile(String userAccount, String fileName, String buket){
+        BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName,buket));
 
         Blob fileBlob = storage.get(id);
 
@@ -41,11 +37,12 @@ public class GCSUploadFileUtils {
 
     }
 
-    private String genGCSFilePath(String accountID,String fileName) {
+
+    private String genGCSFilePath(String accountID,String fileName,String buket) {
 
         StringBuilder builder = new StringBuilder();
         builder.append("gs://");
-        builder.append(cloudBuket);
+        builder.append(buket);
         builder.append("/");
         builder.append(accountID);
         builder.append("/");

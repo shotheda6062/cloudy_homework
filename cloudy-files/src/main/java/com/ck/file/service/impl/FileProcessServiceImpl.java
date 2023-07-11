@@ -5,10 +5,13 @@ import com.ck.file.dao.bean.FileInfoPK;
 import com.ck.file.dao.bean.FileInfoPo;
 import com.ck.file.service.FileProcessService;
 import com.ck.file.service.bean.FileInfoBo;
+import com.ck.file.service.bean.FileInfoRelayBo;
 import com.ck.file.utility.GCSUploadFileUtils;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +34,9 @@ public class FileProcessServiceImpl implements FileProcessService {
     @Autowired
     FileInfoDataAccess fileInfoDataAccess;
 
+    @Value("${spring.cloud.gcp.storage.buket}")
+    private String cloudBuket;
+
     @Override
     public void upload(byte[] file, FileInfoBo fileInfo) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -51,27 +57,33 @@ public class FileProcessServiceImpl implements FileProcessService {
 
         fileInfoDataAccess.save(inputPo);
 
-        gcsUploadFileUtils.upload(file, fileInfo.getUserAccount(), formatFileName, fileInfo.getFileExtension());
+        gcsUploadFileUtils.upload(file, fileInfo.getUserAccount(), formatFileName, fileInfo.getFileExtension(),cloudBuket);
 
     }
 
     @Override
     public byte[] getFile(FileInfoBo fileInfoBo) {
+        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(),cloudBuket);
+    }
 
-        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName());
+
+    @Override
+    public byte[] getFile(FileInfoBo fileInfoBo,String buket) {
+        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(),buket);
     }
 
     @Override
-    public List<FileInfoBo> getFileList(String userAccount) {
-        List<FileInfoBo> result = new ArrayList<>();
+    public List<FileInfoRelayBo> getFileList(String userAccount) {
+        List<FileInfoRelayBo> result = new ArrayList<>();
+
         List<FileInfoPo> relayPoList = fileInfoDataAccess.getListByAccount(userAccount);
+
         if (null == relayPoList) {
             return result;
         }
 
         relayPoList.forEach(x -> {
-            FileInfoBo relayBo = new FileInfoBo();
-            relayBo.setUserAccount(x.getFileInfoPK().getUaerAccount());
+            FileInfoRelayBo relayBo = new FileInfoRelayBo();
             relayBo.setOriginFileName(x.getOrinFileName());
             relayBo.setFileName(x.getFileInfoPK().getFileName());
             relayBo.setFileExtension(x.getFileExtension());

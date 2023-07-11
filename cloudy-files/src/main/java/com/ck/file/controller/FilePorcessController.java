@@ -1,13 +1,12 @@
 package com.ck.file.controller;
 
 import com.ck.file.controller.dto.FileInfoDto;
-import com.ck.file.dao.bean.FileInfoPo;
+import com.ck.file.controller.dto.FileInfoRelayDto;
 import com.ck.file.service.FileProcessService;
 import com.ck.file.service.bean.FileInfoBo;
-import org.springframework.beans.BeanUtils;
+import com.ck.file.service.bean.FileInfoRelayBo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @RestController
+@CrossOrigin(origins = "*",allowedHeaders = "Authorization")
 public class FilePorcessController {
 
     @Autowired
@@ -65,15 +64,16 @@ public class FilePorcessController {
 
     }
 
-    @RequestMapping(value = "/getFileList", method = RequestMethod.POST)
-    public ResponseEntity<List<FileInfoDto>> getFileList(@RequestBody FileInfoDto fileInfoDto) {
+    @PostMapping(value = "/getFileList")
+    public ResponseEntity<List<FileInfoRelayDto>> getFileList() {
 
-        List<FileInfoDto> result = new ArrayList<>();
-        List<FileInfoBo> relayBoLit = fileProcessService.getFileList(fileInfoDto.getUserAccount());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        List<FileInfoRelayDto> result = new ArrayList<>();
+        List<FileInfoRelayBo> relayBoLit = fileProcessService.getFileList(authentication.getName());
         relayBoLit.forEach(x -> {
-            FileInfoDto relayDto = new FileInfoDto();
+            FileInfoRelayDto relayDto = new FileInfoRelayDto();
             relayDto.setFileName(x.getFileName());
-            relayDto.setUserAccount(x.getUserAccount());
             relayDto.setOriginFileName(x.getOriginFileName());
             relayDto.setFileExtestion(x.getFileExtension());
             result.add(relayDto);
