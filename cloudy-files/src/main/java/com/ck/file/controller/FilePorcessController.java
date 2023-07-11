@@ -6,7 +6,13 @@ import com.ck.file.service.FileProcessService;
 import com.ck.file.service.bean.FileInfoBo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
 public class FilePorcessController {
@@ -28,18 +35,34 @@ public class FilePorcessController {
         FileInfoBo fileInfo = new FileInfoBo();
         fileInfo.setUserAccount(userAccount);
         fileInfo.setOriginFileName(file.getOriginalFilename());
-        fileInfo.setFileExtension(getExtension(file.getOriginalFilename(),""));
+        fileInfo.setFileExtension(getExtension(file.getOriginalFilename(), ""));
         fileProcessService.upload(file.getBytes(), fileInfo);
 
     }
 
 
     @PostMapping("/getfile")
-    public byte[] getfile(@RequestBody FileInfoDto fileInfoDto) {
+    public ResponseEntity<ByteArrayResource> getfile(@RequestBody FileInfoDto fileInfoDto) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         FileInfoBo fileInfoBo = new FileInfoBo();
         fileInfoBo.setFileName(fileInfoDto.getFileName());
-        fileInfoBo.setUserAccount(fileInfoDto.getUserAccount());
-        return fileProcessService.getFile(fileInfoBo);
+        fileInfoBo.setUserAccount(authentication.getName());
+
+        byte[] fileBytes = fileProcessService.getFile(fileInfoBo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", fileInfoDto.getOriginFileName());
+
+        // 使用ByteArrayResource將byte array包裝成ResponseEntity物件
+        ByteArrayResource resource = new ByteArrayResource(fileBytes);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+
+
     }
 
     @RequestMapping(value = "/getFileList", method = RequestMethod.POST)

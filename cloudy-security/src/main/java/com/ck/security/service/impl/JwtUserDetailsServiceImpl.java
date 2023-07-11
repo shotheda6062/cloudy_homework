@@ -1,8 +1,7 @@
-package com.ck.account.service.impl;
+package com.ck.security.service.impl;
 
-import com.ck.account.dao.UserDataAccess;
-import com.ck.account.dao.bean.AccountInfoPo;
-import com.google.type.DateTime;
+import com.ck.security.dao.UserDataAccess;
+import com.ck.security.dao.bean.AccountInfoPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @Component
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserDataAccess userDataAccess;

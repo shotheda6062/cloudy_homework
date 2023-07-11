@@ -2,10 +2,16 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/cloudy-account/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloudy-event/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloudy-event/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloudy-files/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloudy-files/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-jpa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-jpa/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cloudy-security/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

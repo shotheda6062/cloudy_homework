@@ -1,12 +1,13 @@
-package com.ck.account.filter;
+package com.ck.security.filter;
 
-import com.ck.account.service.impl.JwtUserDetailsService;
-import com.ck.account.utility.impl.JwtTokenUtil;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.ck.security.utility.JwtTokenUtil;
+import com.ck.security.service.impl.JwtUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsServiceImpl jwtUserDetailsService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;

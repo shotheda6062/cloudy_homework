@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,6 +57,7 @@ public class FileProcessServiceImpl implements FileProcessService {
 
     @Override
     public byte[] getFile(FileInfoBo fileInfoBo) {
+
         return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName());
     }
 

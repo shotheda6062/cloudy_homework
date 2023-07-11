@@ -1,4 +1,4 @@
-package com.ck.account.utility;
+package com.ck.security.service;
 
 public interface CryptoService {
     String encrypt(String text);

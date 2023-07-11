@@ -1,5 +1,6 @@
 package com.ck.file.utility;
 
+import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import java.io.InputStream;
 
 @Component
 public class GCSUploadFileUtils {
@@ -27,7 +30,15 @@ public class GCSUploadFileUtils {
 
     public byte[] getFile(String userAccount,String fileName){
         BlobId id = BlobId.fromGsUtilUri(genGCSFilePath(userAccount,fileName));
-        return storage.readAllBytes(id);
+
+        Blob fileBlob = storage.get(id);
+
+        if(null == fileBlob) {
+            throw new IllegalArgumentException();
+        }
+
+        return fileBlob.getContent();
+
     }
 
     private String genGCSFilePath(String accountID,String fileName) {

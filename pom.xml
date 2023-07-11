@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>cloudy-security</module>
         <module>cloudy-account</module>
         <module>cloudy-files</module>
         <module>cloudy-event</module>

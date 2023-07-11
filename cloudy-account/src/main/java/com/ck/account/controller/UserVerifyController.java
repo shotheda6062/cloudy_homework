@@ -2,8 +2,10 @@ package com.ck.account.controller;
 
 import com.ck.account.controller.bean.UserInfoDto;
 import com.ck.account.controller.bean.UserInfoRelayDto;
-import com.ck.account.service.impl.JwtUserDetailsService;
-import com.ck.account.utility.impl.JwtTokenUtil;
+
+
+import com.ck.security.service.impl.JwtUserDetailsServiceImpl;
+import com.ck.security.utility.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +26,7 @@ public class UserVerifyController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private JwtUserDetailsServiceImpl userDetailsService;
 
     @GetMapping("/test")
     public String test() {

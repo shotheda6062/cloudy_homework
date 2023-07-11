@@ -1,6 +1,6 @@
-package com.ck.account.utility.impl;
+package com.ck.security.utility;
 
-import com.ck.account.utility.CryptoService;
+import com.ck.security.service.CryptoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

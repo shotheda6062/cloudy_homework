@@ -1,6 +1,5 @@
-package com.ck.account.dao.bean;
+package com.ck.security.dao.bean;
 
-import com.google.type.DateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

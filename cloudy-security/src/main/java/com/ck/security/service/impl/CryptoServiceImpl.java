@@ -1,6 +1,6 @@
-package com.ck.account.utility.impl;
+package com.ck.security.service.impl;
 
-import com.ck.account.utility.CryptoService;
+import com.ck.security.service.CryptoService;
 import com.google.cloud.spring.kms.KmsTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

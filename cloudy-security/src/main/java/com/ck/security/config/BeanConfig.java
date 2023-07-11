@@ -1,9 +1,9 @@
-package com.ck.account.config;
+package com.ck.security.config;
 
-import com.ck.account.utility.impl.CloudKMSPasswordEncoder;
+
+import com.ck.security.utility.CloudKMSPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration

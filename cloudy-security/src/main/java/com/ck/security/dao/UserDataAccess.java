@@ -1,7 +1,7 @@
-package com.ck.account.dao;
+package com.ck.security.dao;
 
-import com.ck.account.dao.bean.AccountInfoPo;
-import org.checkerframework.common.util.report.qual.ReportUnqualified;
+
+import com.ck.security.dao.bean.AccountInfoPo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
