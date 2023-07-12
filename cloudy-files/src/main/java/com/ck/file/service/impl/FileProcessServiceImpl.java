@@ -20,10 +20,7 @@ import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class FileProcessServiceImpl implements FileProcessService {
@@ -57,19 +54,19 @@ public class FileProcessServiceImpl implements FileProcessService {
 
         fileInfoDataAccess.save(inputPo);
 
-        gcsUploadFileUtils.upload(file, fileInfo.getUserAccount(), formatFileName, fileInfo.getFileExtension(),cloudBuket);
+        gcsUploadFileUtils.upload(file, fileInfo.getUserAccount(), formatFileName, fileInfo.getFileExtension(), cloudBuket);
 
     }
 
     @Override
     public byte[] getFile(FileInfoBo fileInfoBo) {
-        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(),cloudBuket);
+        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(), cloudBuket);
     }
 
 
     @Override
-    public byte[] getFile(FileInfoBo fileInfoBo,String buket) {
-        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(),buket);
+    public byte[] getFile(FileInfoBo fileInfoBo, String buket) {
+        return gcsUploadFileUtils.getFile(fileInfoBo.getUserAccount(), fileInfoBo.getFileName(), buket);
     }
 
     @Override
@@ -87,6 +84,20 @@ public class FileProcessServiceImpl implements FileProcessService {
             relayBo.setOriginFileName(x.getOrinFileName());
             relayBo.setFileName(x.getFileInfoPK().getFileName());
             relayBo.setFileExtension(x.getFileExtension());
+            relayBo.setCreateDate(x.getCreatedTime().toString());
+
+            try {
+                FileInfoBo input = new FileInfoBo();
+                input.setUserAccount(userAccount);
+                input.setFileName(relayBo.getFileName());
+
+                byte[] fileData = getFile(input, "img_compress");
+                relayBo.setFileData(Base64.getEncoder().encodeToString(fileData));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
             result.add(relayBo);
         });
 

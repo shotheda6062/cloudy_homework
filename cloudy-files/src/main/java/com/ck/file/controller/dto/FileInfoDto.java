@@ -9,9 +9,6 @@ public class FileInfoDto {
 
     String fileName;
 
-    String fileExtestion;
-
     String originFileName;
 
-    Boolean isCompress;
 }

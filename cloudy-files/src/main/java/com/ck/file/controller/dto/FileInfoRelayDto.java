@@ -14,4 +14,8 @@ public class FileInfoRelayDto {
 
     String originFileName;
 
+    String createTime;
+
+    String fileData;
+
 }

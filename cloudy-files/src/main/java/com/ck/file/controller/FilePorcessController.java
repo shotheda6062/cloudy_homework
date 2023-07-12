@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/file")
 @CrossOrigin(origins = "*",allowedHeaders = "Authorization")
 public class FilePorcessController {
 
@@ -29,10 +30,12 @@ public class FilePorcessController {
 
 
     @PostMapping("/upload")
-    public void upload(@RequestParam("file") MultipartFile file, @RequestParam("userAccount") String userAccount) throws IOException {
+    public void upload(@RequestParam("file") MultipartFile file) throws IOException {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         FileInfoBo fileInfo = new FileInfoBo();
-        fileInfo.setUserAccount(userAccount);
+        fileInfo.setUserAccount(authentication.getName());
         fileInfo.setOriginFileName(file.getOriginalFilename());
         fileInfo.setFileExtension(getExtension(file.getOriginalFilename(), ""));
         fileProcessService.upload(file.getBytes(), fileInfo);
@@ -76,6 +79,8 @@ public class FilePorcessController {
             relayDto.setFileName(x.getFileName());
             relayDto.setOriginFileName(x.getOriginFileName());
             relayDto.setFileExtestion(x.getFileExtension());
+            relayDto.setCreateTime(x.getCreateDate());
+            relayDto.setFileData(x.getFileData());
             result.add(relayDto);
         });
 

@@ -13,4 +13,8 @@ public class FileInfoRelayBo {
 
     String fileExtension;
 
+    String createDate;
+
+    String fileData;
+
 }
