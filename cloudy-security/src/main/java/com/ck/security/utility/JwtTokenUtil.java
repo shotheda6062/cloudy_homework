@@ -1,8 +1,10 @@
 package com.ck.security.utility;
 
+import com.google.cloud.spring.secretmanager.SecretManagerTemplate;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,10 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
+
+    @Autowired
+    SecretManagerTemplate secretManagerTemplate;
+
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -36,7 +42,8 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        final String gcpJwtSecret = secretManagerTemplate.getSecretString(secret);
+        return Jwts.parser().setSigningKey(gcpJwtSecret).parseClaimsJws(token).getBody();
     }
 
 
@@ -46,11 +53,14 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(UserDetails userDetails) {
+
+        final String gcpJwtSecret = secretManagerTemplate.getSecretString(secret);
+
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, gcpJwtSecret)
                 .compact();
     }
 
