@@ -15,5 +15,7 @@ public class FileInfoBo {
 
     String fileExtension;
 
+    Long fileSize;
+
 
 }

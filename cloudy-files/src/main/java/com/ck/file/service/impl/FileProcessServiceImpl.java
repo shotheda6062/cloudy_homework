@@ -15,6 +15,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -48,6 +49,7 @@ public class FileProcessServiceImpl implements FileProcessService {
         inputPo.setOrinFileName(fileInfo.getOriginFileName());
         inputPo.setFileExtension(fileInfo.getFileExtension());
         inputPo.setUpdateSNo(getMaxUpdSonByUserAccount(fileInfo.getUserAccount()));
+        inputPo.setFileSize(fileInfo.getFileSize());
         inputPo.setCreatedTime(new Timestamp(new Date().getTime()));
         inputPo.setUpdateTime(new Timestamp(new Date().getTime()));
         inputPo.setFileStatus(true);
@@ -85,6 +87,7 @@ public class FileProcessServiceImpl implements FileProcessService {
             relayBo.setFileName(x.getFileInfoPK().getFileName());
             relayBo.setFileExtension(x.getFileExtension());
             relayBo.setCreateDate(x.getCreatedTime().toString());
+            relayBo.setOriginFileSize(x.getFileSize());
 
             try {
                 FileInfoBo input = new FileInfoBo();
@@ -93,6 +96,7 @@ public class FileProcessServiceImpl implements FileProcessService {
 
                 byte[] fileData = getFile(input, "img_compress");
                 relayBo.setFileData(Base64.getEncoder().encodeToString(fileData));
+                relayBo.setCompressFileSize((long) fileData.length);
 
             } catch (Exception ex) {
                 ex.printStackTrace();

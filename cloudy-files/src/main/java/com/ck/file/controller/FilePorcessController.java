@@ -35,9 +35,11 @@ public class FilePorcessController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         FileInfoBo fileInfo = new FileInfoBo();
+
         fileInfo.setUserAccount(authentication.getName());
         fileInfo.setOriginFileName(file.getOriginalFilename());
         fileInfo.setFileExtension(getExtension(file.getOriginalFilename(), ""));
+        fileInfo.setFileSize(file.getSize());
         fileProcessService.upload(file.getBytes(), fileInfo);
 
     }
@@ -81,6 +83,8 @@ public class FilePorcessController {
             relayDto.setFileExtestion(x.getFileExtension());
             relayDto.setCreateTime(x.getCreateDate());
             relayDto.setFileData(x.getFileData());
+            relayDto.setCompressFileSize(x.getCompressFileSize());
+            relayDto.setOriginFileSize(x.getOriginFileSize());
             result.add(relayDto);
         });
 

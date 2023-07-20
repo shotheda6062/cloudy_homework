@@ -37,6 +37,9 @@ public class FileInfoPo {
     @Column(name="file_status")
     Boolean fileStatus;
 
+    @Column(name="file_size")
+    Long fileSize;
+
 }
 
 

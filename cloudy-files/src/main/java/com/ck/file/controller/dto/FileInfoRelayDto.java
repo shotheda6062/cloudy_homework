@@ -10,9 +10,13 @@ public class FileInfoRelayDto {
 
     String fileName;
 
+    Long compressFileSize;
+
     String fileExtestion;
 
     String originFileName;
+
+    Long originFileSize;
 
     String createTime;
 

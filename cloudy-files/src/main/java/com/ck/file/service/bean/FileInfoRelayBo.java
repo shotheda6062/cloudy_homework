@@ -9,12 +9,18 @@ import org.springframework.core.io.ByteArrayResource;
 public class FileInfoRelayBo {
     String originFileName;
 
+    Long originFileSize;
+
     String fileName;
+
+    Long compressFileSize;
 
     String fileExtension;
 
     String createDate;
 
     String fileData;
+
+
 
 }
