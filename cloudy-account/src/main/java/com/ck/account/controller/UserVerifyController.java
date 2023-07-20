@@ -28,10 +28,6 @@ public class UserVerifyController {
     @Autowired
     private JwtUserDetailsServiceImpl userDetailsService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "TEST";
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserInfoDto userInfoDto) throws Exception {
